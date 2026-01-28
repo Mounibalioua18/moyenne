@@ -1,4 +1,3 @@
-
 import { ModuleConfig } from './types';
 
 export const MODULES: ModuleConfig[] = [

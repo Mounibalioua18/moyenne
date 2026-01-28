@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ModuleConfig, SemesterState } from '../types';
 import { calculateModuleAverage } from '../utils';
@@ -23,27 +22,25 @@ const Summary: React.FC<Props> = ({ modules, state }) => {
   const isPassing = semesterAverage >= 10;
 
   return (
-    <div className="bg-indigo-900 text-white rounded-3xl p-6 md:p-8 shadow-xl mb-8 md:sticky md:top-4 z-20 overflow-hidden text-center transition-all">
-      {/* Background Decoration */}
-      <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-indigo-800 rounded-full opacity-50 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-indigo-700 rounded-full opacity-30 blur-3xl pointer-events-none"></div>
-
+    <div className="bg-[#1a195e] text-white rounded-[2rem] p-8 shadow-2xl mb-12 text-center transition-all relative overflow-hidden border border-indigo-500/20">
+      <div className="absolute top-0 left-0 w-full h-full opacity-20 bg-[radial-gradient(circle_at_50%_-20%,rgba(99,102,241,0.4),transparent)] pointer-events-none"></div>
+      
       <div className="relative flex flex-col items-center">
-        <h2 className="text-indigo-200 font-semibold uppercase tracking-widest text-xs md:text-sm mb-1">
-          Moyenne du Semestre
+        <h2 className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs mb-2">
+          Semester Average
         </h2>
         
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-5xl md:text-7xl font-black tracking-tighter">
+        <div className="flex items-baseline gap-2 mb-6">
+          <span className="text-7xl md:text-9xl font-black tracking-tighter text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             {semesterAverage.toFixed(2)}
           </span>
-          <span className="text-xl md:text-2xl font-medium text-indigo-300">/ 20</span>
+          <span className="text-2xl md:text-3xl font-bold text-slate-500">/ 20</span>
         </div>
 
-        <div className="inline-flex items-center px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
-          <span className={`w-3 h-3 rounded-full mr-3 ${isPassing ? 'bg-emerald-400' : 'bg-rose-400'} animate-pulse`}></span>
-          <span className="text-sm md:text-base font-black uppercase tracking-tight">
-            {isPassing ? 'Semestre Validé' : 'Semestre Non Validé'}
+        <div className={`inline-flex items-center px-6 py-2 rounded-full border ${isPassing ? 'border-emerald-500/40 bg-emerald-500/5 text-emerald-300' : 'border-rose-500/40 bg-rose-500/5 text-rose-300'}`}>
+          <span className={`w-2.5 h-2.5 rounded-full mr-3 ${isPassing ? 'bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.8)]' : 'bg-rose-400 shadow-[0_0_15px_rgba(251,113,133,0.8)]'}`}></span>
+          <span className="text-xs md:text-sm font-black uppercase tracking-widest">
+            {isPassing ? 'Semester Passed' : 'Semester Failed'}
           </span>
         </div>
       </div>

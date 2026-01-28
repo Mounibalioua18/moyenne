@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ModuleConfig, ModuleMarks } from '../types.ts';
 import { calculateModuleAverage, getStatusColor } from '../utils.ts';
@@ -11,46 +10,49 @@ interface Props {
 
 const ModuleCard: React.FC<Props> = ({ config, marks, onChange }) => {
   const average = calculateModuleAverage(config, marks);
-  const colorClass = getStatusColor(average);
+  const statusClasses = getStatusColor(average);
 
   const handleInputChange = (part: keyof ModuleMarks, val: string) => {
     if (val === "") {
-        onChange(config.id, part, undefined as any);
-        return;
+      onChange(config.id, part, undefined as any);
+      return;
     }
     const num = parseFloat(val);
-    onChange(config.id, part, isNaN(num) ? 0 : Math.min(20, Math.max(0, num)));
+    const safeNum = isNaN(num) ? 0 : Math.min(20, Math.max(0, num));
+    onChange(config.id, part, safeNum);
   };
 
-  const inputClasses = "w-full px-3 py-2 bg-slate-100 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-black font-bold text-lg placeholder:text-slate-400 placeholder:font-normal";
+  const inputClasses = "w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all text-white font-bold text-lg placeholder:text-slate-700 placeholder:font-normal";
 
-  // Dynamic weights for labels
-  const isExamOnly = !config.hasTd && !config.hasTp;
-  const examWeight = isExamOnly ? "100%" : "60%";
-  const tdWeight = config.hasTp ? "20%" : "40%";
-  const tpWeight = config.hasTd ? "20%" : "40%";
+  const getWeightLabel = (part: 'exam' | 'td' | 'tp') => {
+    if (part === 'exam') return !config.hasTd && !config.hasTp ? "100%" : "60%";
+    if (part === 'td') return config.hasTp ? "20%" : "40%";
+    if (part === 'tp') return config.hasTd ? "20%" : "40%";
+    return "";
+  };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 transition-all hover:shadow-md">
-      <div className="flex justify-between items-start mb-4">
+    <div className="group bg-slate-900 rounded-3xl shadow-lg border border-slate-800 p-6 transition-all hover:shadow-2xl hover:border-slate-700 duration-200">
+      <div className="flex justify-between items-start mb-6">
         <div>
-          <h3 className="text-lg font-bold text-slate-800 leading-tight">{config.name}</h3>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mt-1">
-            Coefficient: {config.coefficient}
-          </p>
+          <h3 className="text-xl font-bold text-slate-100 leading-tight">{config.name}</h3>
+          <span className="inline-block px-2 py-0.5 mt-2 bg-slate-800 text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-md">
+            COEFF {config.coefficient}
+          </span>
         </div>
-        <div className={`px-3 py-1 rounded-full border text-sm font-black ${colorClass}`}>
+        <div className={`px-4 py-2 rounded-xl border font-black tabular-nums text-lg ${statusClasses}`}>
           {average.toFixed(2)}
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         <div>
-          <label className="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight">EXAMEN ({examWeight})</label>
+          <div className="flex justify-between mb-1.5 px-1">
+            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">EXAM</label>
+            <span className="text-[10px] font-bold text-indigo-400/50">{getWeightLabel('exam')}</span>
+          </div>
           <input
             type="number"
-            min="0"
-            max="20"
             step="0.25"
             value={marks.exam ?? ''}
             onChange={(e) => handleInputChange('exam', e.target.value)}
@@ -61,11 +63,12 @@ const ModuleCard: React.FC<Props> = ({ config, marks, onChange }) => {
 
         {config.hasTd && (
           <div>
-            <label className="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight">TD ({tdWeight})</label>
+            <div className="flex justify-between mb-1.5 px-1">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">TD</label>
+              <span className="text-[10px] font-bold text-indigo-400/50">{getWeightLabel('td')}</span>
+            </div>
             <input
               type="number"
-              min="0"
-              max="20"
               step="0.25"
               value={marks.td ?? ''}
               onChange={(e) => handleInputChange('td', e.target.value)}
@@ -77,11 +80,12 @@ const ModuleCard: React.FC<Props> = ({ config, marks, onChange }) => {
 
         {config.hasTp && (
           <div>
-            <label className="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight">TP ({tpWeight})</label>
+            <div className="flex justify-between mb-1.5 px-1">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">TP</label>
+              <span className="text-[10px] font-bold text-indigo-400/50">{getWeightLabel('tp')}</span>
+            </div>
             <input
               type="number"
-              min="0"
-              max="20"
               step="0.25"
               value={marks.tp ?? ''}
               onChange={(e) => handleInputChange('tp', e.target.value)}

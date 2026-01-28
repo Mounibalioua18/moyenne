@@ -1,4 +1,3 @@
-
 import { ModuleConfig, ModuleMarks } from './types.ts';
 import { WEIGHTS } from './constants.ts';
 
@@ -27,8 +26,8 @@ export const calculateModuleAverage = (config: ModuleConfig, marks: ModuleMarks)
 };
 
 export const getStatusColor = (average: number): string => {
-  if (average >= 14) return 'text-emerald-700 bg-emerald-50 border-emerald-200';
-  if (average >= 10) return 'text-indigo-700 bg-indigo-50 border-indigo-200';
-  if (average >= 8) return 'text-amber-700 bg-amber-50 border-amber-200';
-  return 'text-rose-700 bg-rose-50 border-rose-200';
+  if (average >= 14) return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+  if (average >= 10) return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
+  if (average >= 8) return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+  return 'bg-rose-500/10 text-rose-400 border-rose-500/30';
 };
