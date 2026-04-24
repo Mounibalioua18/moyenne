@@ -22,26 +22,33 @@ const Summary: React.FC<Props> = ({ modules, state }) => {
   const isPassing = semesterAverage >= 10;
 
   return (
-    <div className="bg-[#1a195e] text-white rounded-[2rem] p-8 shadow-2xl mb-12 text-center transition-all relative overflow-hidden border border-indigo-500/20">
-      <div className="absolute top-0 left-0 w-full h-full opacity-20 bg-[radial-gradient(circle_at_50%_-20%,rgba(99,102,241,0.4),transparent)] pointer-events-none"></div>
-      
-      <div className="relative flex flex-col items-center">
-        <h2 className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs mb-2">
-          Semester Average
-        </h2>
+    <div className="relative mb-20">
+      <div className="relative bg-white rounded-[3rem] p-12 md:p-16 border border-slate-200 shadow-sm flex flex-col items-center overflow-hidden">
         
-        <div className="flex items-baseline gap-2 mb-6">
-          <span className="text-7xl md:text-9xl font-black tracking-tighter text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-            {semesterAverage.toFixed(2)}
-          </span>
-          <span className="text-2xl md:text-3xl font-bold text-slate-500">/ 20</span>
-        </div>
+        <div className="relative z-10 flex flex-col items-center">
+          
+          
+          <div className="flex flex-col md:flex-row items-center justify-center mb-10 text-slate-900">
+            <div className="flex items-baseline">
+              <span className="text-8xl md:text-9xl font-black tracking-tighter leading-none">
+                {semesterAverage.toFixed(2)}
+              </span>
+              <span className="text-4xl md:text-6xl font-black tracking-tighter text-slate-200 ml-4">
+                / 20
+              </span>
+            </div>
+          </div>
 
-        <div className={`inline-flex items-center px-6 py-2 rounded-full border ${isPassing ? 'border-emerald-500/40 bg-emerald-500/5 text-emerald-300' : 'border-rose-500/40 bg-rose-500/5 text-rose-300'}`}>
-          <span className={`w-2.5 h-2.5 rounded-full mr-3 ${isPassing ? 'bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.8)]' : 'bg-rose-400 shadow-[0_0_15px_rgba(251,113,133,0.8)]'}`}></span>
-          <span className="text-xs md:text-sm font-black uppercase tracking-widest">
-            {isPassing ? 'Semester Passed' : 'Semester Failed'}
-          </span>
+          <div className={`flex items-center px-10 py-5 rounded-2xl border transition-all duration-300 ${
+            isPassing 
+            ? 'bg-emerald-600 border-emerald-700 text-white' 
+            : 'bg-slate-800 border-slate-900 text-white'
+          }`}>
+            <div className={`w-3 h-3 rounded-full mr-4 bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)] ${isPassing ? 'animate-pulse' : ''}`}></div>
+            <span className="text-base font-black uppercase tracking-widest">
+              {isPassing ? 'Semestre Validé' : 'Semestre Non-Validé'}
+            </span>
+          </div>
         </div>
       </div>
     </div>
